@@ -12,7 +12,7 @@ function Viewer({ id }) {
 
   useEffect(() => {
     // Fetch the mocked data when component mounts
-    fetch(`http://localhost:5000/api/mock/${id}`)
+    fetch(`https://mock-it-zcl0.onrender.com/api/mock/${id}`)
       .then(res => {
         if (!res.ok) throw new Error('Endpoint not found or expired.');
         return res.json();
@@ -151,7 +151,7 @@ function Generator() {
       // PROOFING: JSON validation errors handled gracefully here
       JSON.parse(jsonInput);
       
-      const response = await fetch('http://localhost:5000/api/generate', {
+      const response = await fetch('https://mock-it-zcl0.onrender.com/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' }, // Avoids strict backend json parsing issues
         body: jsonInput,
