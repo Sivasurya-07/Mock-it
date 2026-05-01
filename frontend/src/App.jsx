@@ -147,6 +147,9 @@ function Generator() {
     setLoading(true);
 
     try {
+      // PROOFING: JSON validation errors handled gracefully here
+      JSON.parse(jsonInput);
+
       const response = await fetch('https://mock-it-zcl0.onrender.com/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' }, // Avoids strict backend json parsing issues
