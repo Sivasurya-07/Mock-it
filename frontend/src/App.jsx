@@ -27,7 +27,7 @@ function Viewer({ id }) {
         <AlertCircle size={48} style={{ margin: '0 auto 1rem' }} />
         <h2>Error Loading Endpoint</h2>
         <p>{error}</p>
-        <a href="/" className="view-dashboard-btn" style={{ marginTop: '2rem' }}>
+        <a href="#/" className="view-dashboard-btn" style={{ marginTop: '2rem' }}>
           <ArrowLeft size={16} /> Go Back
         </a>
       </div>
@@ -100,7 +100,7 @@ function Viewer({ id }) {
 
       <div className="viewer-container">
         <div className="viewer-header">
-          <a href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <a href="#/" style={{ color: 'var(--text-muted)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <ArrowLeft size={18} /> Back
           </a>
           
@@ -257,7 +257,7 @@ function Generator() {
           
           <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
             <p style={{ color: '#059669', fontSize: '0.9rem', marginBottom: '0.5rem' }}>View your endpoint dashboard:</p>
-            <a href={`/view/${result.id}`} className="view-dashboard-btn">
+            <a href={`#/view/${result.id}`} className="view-dashboard-btn">
               <Table2 size={16} /> View Data Dashboard
             </a>
           </div>
@@ -275,10 +275,16 @@ function Generator() {
 // MAIN APP COMPONENT (Simple Routing)
 // ==========================================
 function App() {
-  const path = window.location.pathname;
+  const [currentHash, setCurrentHash] = useState(window.location.hash);
+
+  useEffect(() => {
+    const handleHashChange = () => setCurrentHash(window.location.hash);
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
   
-  if (path.startsWith('/view/')) {
-    const id = path.split('/')[2];
+  if (currentHash.startsWith('#/view/')) {
+    const id = currentHash.split('/')[2];
     return <Viewer id={id} />
   }
 
